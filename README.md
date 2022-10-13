@@ -17,7 +17,7 @@
 ## Description
 
 This project aims to launch a JupyterHub as quickly as possible,
-and to save users' time by providing better interface between their
+and to save users' time by providing a better interface between their
 workstation and their base infrastructure. The project becomes more mature
 when users would not have to do much work on their workstation.
 
