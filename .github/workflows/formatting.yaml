@@ -1,0 +1,17 @@
+name: formatting_check
+
+on:
+  push:
+    branches-ignore:
+    - ignore-all-branches
+
+jobs:
+  formatting_check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: doc_links_check.sh
+      run: ./bin/doc_links_check.sh
