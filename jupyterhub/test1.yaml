@@ -1,0 +1,57 @@
+## https://z2jh.jupyter.org/en/stable/jupyterhub/customizing/user-environment.html
+singleuser:
+  image:
+    # You should replace the "latest" tag with a fixed version from:
+    # https://hub.docker.com/r/jupyter/datascience-notebook/tags/
+    # Inspect the Dockerfile at:
+    # https://github.com/jupyter/docker-stacks/tree/HEAD/datascience-notebook/Dockerfile
+    name: jupyter/datascience-notebook
+    tag: latest
+  # `cmd: null` allows the custom CMD of the Jupyter docker-stacks to be used
+  # which performs further customization on startup.
+  cmd: null
+  extraEnv:
+    # Modern server; this is the default with JupyterHub 2.0
+    JUPYTERHUB_SINGLEUSER_APP: "jupyter_server.serverapp.ServerApp"
+  defaultUrl: "/lab"
+  ## FIXME: Use nbgitpuller or rsync instead
+  lifecycleHooks:
+    postStart:
+      exec:
+        command:
+          - "sh"
+          - "-c"
+          - >
+            echo cp -r /tmp/foo /home/jovyan;
+            echo cp -r /tmp/bar /home/jovyan
+  storage:
+    dynamic:
+      storageClass: gp2
+    capacity: 20Gi
+
+  # Disable access to cloud metadata api server.
+  cloudMetadata:
+    blockWithIptables: true
+    ip: 169.254.169.254
+
+cull:
+  enabled: false
+
+hub:
+  config:
+    Authenticator:
+      admin_users:
+        - test1
+      auto_login: false
+    JupyterHub:
+      admin_access: true
+      authenticator_class: dummy
+    DummyAuthenticator:
+      password: verysecure
+
+ingress:
+  enabled: false
+  hosts:
+  - test1.test1
+  annotations:
+    nginx.ingress.kubernetes.io/whitelist-source-range: 127.0.0.1/32
