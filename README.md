@@ -201,6 +201,6 @@ Enjoy your new JupyterHub.
 ## Authors. License
 
 The project is released under the terms of a BSD-3 license.
-Please see [LICENSE](LICENSE) for more details.
+Please see [LICENSE](LICENSEx) for more details.
 
 The original author is Ky-Anh Huynh.
