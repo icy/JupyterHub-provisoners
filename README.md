@@ -4,27 +4,34 @@
 - [State](#state)
 - [Prequisites](#prequisites)
   - [Alpha](#alpha)
-  - [Beta](#beta)
 - [Instructions](#instructions)
   - [Generating ssh keypair](#generating-ssh-keypair)
   - [Creating EKS cluster](#creating-eks-cluster)
   - [Adjusting JupyterHub configuration](#adjusting-jupyterhub-configuration)
-  - [Accessing JupyterHub](#accssing-jupyterhub)
+  - [Installing JupyterHub](#installing-jupyterhub)
+  - [Accessing JupyterHub](#accessing-jupyterhub)
 - [Updating and Cleaning up](#updating-and-cleaning-up)
+- [TODO](#todo)
+- [Authors. License](#authors-license)
 
 ## Description
 
 This project aims to launch a JupyterHub as fast as possible,
 and to save users' time by providing better interface between their
-workstation and base infrastructure. The project becomes more mature
+workstation and their base infrastructure. The project becomes more mature
 when users would not have to do much work on their workstation.
 
 ## State
 
-- [x] Alpha, devops experience level 1, user level 3
+- [x] Alpha, devops experience level 1, user level 3. See also [TODO](#TODO).
+    - [x] aws
 - [ ] Beta, devops experience level 2, user level 2
     - [ ] script-based and/or docker-based installation
     - [ ] Cross-platform instructions/scripts (Windows, Linux, Mac)
+- [ ] Beta2, devops experience
+    - [ ] gcp
+    - [ ] azure
+    - [ ] bare metal platform
 - [ ] SRE experience, user level 1
     - [ ] Web interface, click click click
 
@@ -46,7 +53,7 @@ Local tools:
 - [ ] `kubectl` (Installation: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
 - [ ] `helm` (Installation: https://get.helm.sh/helm-v3.9.1-linux-amd64.tar.gz)
 
-Please follow installation notes from the upstream projects to learn how to install these tools
+Please follow the upstream projects to learn how to install these tools.
 
 ## Instructions
 
@@ -80,8 +87,8 @@ ip-192-168-47-129.ap-southeast-1.compute.internal   Ready    <none>   3m11s   v1
 
 ### Adjusting JupyterHub configuration
 
-The configuration file is [jupyterhub/test1.yaml]. Please focus on the
-most relevant items
+The configuration file is [jupyterhub/test1.yaml](jupyterhub/test1.yaml).
+Please focus on the most relevant items
 
 - [ ] Storage size: `singleuser.storge.capacity`
 - [ ] notebook base image: `singleuser.image.name`
@@ -127,7 +134,7 @@ $ helm upgrade --cleanup-on-fail \
 
 Release "test1" does not exist. Installing it now.
 NAME: test1
-LAST DEPLOYED: Thu Oct 13 11:48:50 2022
+LAST DEPLOYED: 2030
 NAMESPACE: test1
 STATUS: deployed
 REVISION: 1
@@ -156,26 +163,44 @@ then get back to the original shell's session, and then open from your browser
 - [ ] http://localhost:8080
 - [ ] or http://127.0.0.1:8080
 
-When being asked for the user authentication data please complete with
+When being asked for user authentication data please complete with
 
 ```
 username:  test1
 password:  verysecure
 ```
+
+(or the password that you will have given in [jupyterhub/test1.yaml](jupyterhub/test1.yaml)).
+
 Enjoy your new JupyterHub.
 
 ## Updating and cleaning up
 
 - [ ] If you want to update jupyterhub after it's installed, you can adjust
       its configuration and invoke the same commad (`helm upgrade...`)
-      as see in [Installing JupyterHub](#installing-jupyterhub).
+      as seen in [Installing JupyterHub](#installing-jupyterhub).
 - [ ] If you want to adjust the EKS cluster configuration, please refer
-      to visit `eksctl`'s homepage for more details.
+      to `eksctl`'s homepage for more details.
 - [ ] If you want to destroy everything after your test is done, you can try
-      the following dangerous command:
+      the following dangerous commands:
 
-      ```
       $ export KUBECONFIG=`pwd -P`/clusters/test1/kubeconfig.yaml
       $ kubectl delete namespace test1
       $ eksctl delete cluster  --config-file clusters/test1/eksctl.yaml
-      ```
+
+## TODO
+
+- [x] persistent storage
+- [ ] database integration
+- [ ] ingress
+    - [ ] bug: ingress whitelist doesn't work
+    - [x] set up and patch
+- [ ] notebook sync
+- [ ] ci/cd
+
+## Authors. License
+
+The project is released under the terms of a BSD-3 license.
+Please see [LICENSE](LICENSE) for more details.
+
+The original author is Ky-Anh Huynh.
