@@ -101,7 +101,7 @@ There is a bug in the chart that doesn't allow whitelist setting to work correct
 
 Please pickup your jupyterhub version from https://jupyterhub.github.io/helm-chart/,
 or from the following table. In the next sample command, the helm-chart version
-is `1.2.0` that means the jupyterhub version 1.5.0 will be install
+is `1.2.0` that means the jupyterhub version 1.5.0 will be installed
 
 ```
 Helm-chart version               jupyterhub version
