@@ -2,6 +2,8 @@
 
 # Author  : Ky-Anh Huynh
 # Purpose : Check if links in Markdown files are broken
+# License : MIT
+# Date    : Someday @2019
 
 list_links() {
   grep -Eoe '\[[^]]+\]\([^)]+\)' \
